@@ -1,5 +1,7 @@
 # DCPU-16 Ruby Emulator
 
+require_relative './dcpu16/parser'
+
 filename = ARGV.first
 raise "Need a filename!" unless filename
 
