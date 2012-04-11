@@ -2,6 +2,18 @@ require_relative './instruction_set'
 require 'ostruct'
 
 module DCPU16
+
+  ##
+  # = Emulator
+  #
+  # Emulates the DCPU16.
+  #
+  # == Usage
+  #
+  #  emulator = DCPU16::Emulator.new "myfile.bin"
+  #  emulator.run
+  #  p emulator.dump
+  #
   class Emulator
     attr_reader :memory, :pc, :sp, :overflow, :registers
 
@@ -28,7 +40,7 @@ module DCPU16
       @registers.each do |k, v|
         dump << k.to_s(16) + ": " + v.to_s(16)
       end
-      dump.join " "
+      dump.join " | "
     end
 
     protected
