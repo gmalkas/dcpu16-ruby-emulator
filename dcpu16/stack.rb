@@ -1,6 +1,6 @@
 module DCPU16
   #
-  # == Stack
+  # = Stack
   #
   # Implements the stack.
   # According to the specification, the stack starts in reverse order at address 0xFFFF in the RAM.

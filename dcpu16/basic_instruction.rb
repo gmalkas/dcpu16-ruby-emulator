@@ -1,6 +1,6 @@
 module DCPU16
   #
-  # == BasicInstruction
+  # = BasicInstruction
   #
   # Implements some common functionalities for basic instructions.
   #

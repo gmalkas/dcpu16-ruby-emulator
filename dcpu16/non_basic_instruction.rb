@@ -1,6 +1,6 @@
 module DCPU16
   #
-  # == NonBasicInstruction
+  # = NonBasicInstruction
   #
   # Implements some common functionalities for non basic instructions.
   #

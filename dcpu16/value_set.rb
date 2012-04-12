@@ -1,7 +1,7 @@
 module DCPU16
 
   #
-  # == ValueSet
+  # = ValueSet
   #
   # Encapsulates the mapping between hexadecimal codes and their corresponding meanings (RAM, Registers, etc).
   #

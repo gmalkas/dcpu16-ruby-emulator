@@ -17,7 +17,7 @@ require_relative './instructions/jsr'
 
 module DCPU16
   #
-  # == InstructionSet
+  # = InstructionSet
   #
   # Encapsulates the mapping between opcodes and instructions.
   #

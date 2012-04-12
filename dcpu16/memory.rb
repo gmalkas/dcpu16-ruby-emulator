@@ -1,6 +1,6 @@
 module DCPU16
   #
-  # == Memory
+  # = Memory
   # 
   # Implements the RAM and provides some utility methods to use binary strings.
   #
