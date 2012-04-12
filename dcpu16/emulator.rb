@@ -50,6 +50,10 @@ module DCPU16
       dump.join " | "
     end
 
+    def skip_instruction
+      parse_instruction next_word
+    end
+
     protected
 
     def load_program_from_file(path)
