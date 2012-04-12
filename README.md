@@ -6,7 +6,7 @@ Specification: Latest version is http://0x10c.com/doc/dcpu-16.txt, see `dcpu-16-
 
 How-to: add new instructions
 ============================
-If you want to extend the current DCPU-16 specification and add your own instructions, you can simply create a new file in dcpu16/instructions and extend
+If you want to extend the current DCPU-16 specification and add your own instructions, you can simply create a new file in `dcpu16/instructions` and extend
 NonBasicInstruction. You then have to implement the #execute method, add your instruction to the instruction set in `dcpu16/instruction_set.rb` and you're good to go.
 
 Caveats
