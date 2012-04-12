@@ -17,7 +17,8 @@ module DCPU16
   #  p emulator.dump
   #
   class Emulator
-    attr_reader :memory, :pc, :stack, :overflow, :registers
+    attr_reader :memory, :stack, :registers
+    attr_accessor :pc, :overflow
 
     def initialize(path)
       initialize_registers
@@ -79,6 +80,7 @@ module DCPU16
     end
 
     def execute
+      @overflow = 0
       instruction = parse_instruction next_word
       instruction.execute self
     end

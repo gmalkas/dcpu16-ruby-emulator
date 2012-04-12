@@ -1,7 +1,7 @@
 module DCPU16
   class ValueSet
     #
-    # Returns the corresponding value.
+    # Returns the corresponding value as a binary string.
     # `code` and `next_word` must be integers
     #
     def self.get(emulator, code, next_word)

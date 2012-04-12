@@ -11,7 +11,9 @@ module DCPU16
       def execute(emulator)
         b = ValueSet.get emulator, @b, @next_code_b
         a = ValueSet.get emulator, @a, @next_code_a
-        result = (a + b) & 0xFFFF
+        result = Memory.to_bin (a + b)
+        ValueSet.set emulator, @a, @next_code_a, result
+        emulator.overflow = 1 if Memory.to_i(result) < a + b
       end
     end
   end
