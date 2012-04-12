@@ -14,7 +14,7 @@ module DCPU16
     end
 
     def insert(index, value)
-      @ram.insert(index, value)
+      @ram[index] = value
     end
 
     def insert_integer(index, value)

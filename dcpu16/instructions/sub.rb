@@ -3,9 +3,9 @@ require_relative '../basic_instruction'
 
 module DCPU16
   module Instructions
-    class Add < BasicInstruction
+    class Sub < BasicInstruction
       def initialize
-        @opcode = 0x2
+        @opcode = 0x3
       end
 
       def execute(emulator)
@@ -13,9 +13,9 @@ module DCPU16
         a = ValueSet.get emulator, @a, @next_word_a
         a_i = Memory.to_i a
         b_i = Memory.to_i b
-        result = Memory.to_bin (a_i + b_i)
-        ValueSet.set emulator, @a, @next_word_a, result
-        emulator.overflow = 1 if Memory.to_i(result) != a_i + b_i
+        result = Memory.to_bin (a_i - b_i)
+        ValueSet.set emulator, @a, @next_code_a, result
+        emulator.overflow = 1 if Memory.to_i(result) != a_i - b_i
       end
     end
   end
