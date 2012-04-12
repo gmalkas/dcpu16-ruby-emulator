@@ -1,7 +1,8 @@
 module DCPU16
   class Memory
     def initialize(data)
-      @ram = data
+      @ram = Array.new (0x10000 - data.size)
+      @ram.insert 0, *data   
     end
 
     def fetch(index)

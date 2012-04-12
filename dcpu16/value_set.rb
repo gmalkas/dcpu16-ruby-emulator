@@ -34,11 +34,12 @@ module DCPU16
     end
 
     def self.set(emulator, code, next_word, value)
+        bin_value = Memory.to_bin value
         case code
         when 0x00..0x07
-          emulator.registers[code] = Memory.to_bin(value)
+          emulator.registers[code] = bin_value
         when 0x08..0x0F
-          emulator.memory[emulator.registers[code - 0x08]] = value
+          emulator.memory[emulator.registers[code - 0x08]] = bin_value
         when 0x10..0x17
           emulator.memory[next_word + emulator.registers[code - 0x10]] = value
         when 0x1A

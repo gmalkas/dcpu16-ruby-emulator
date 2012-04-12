@@ -34,7 +34,7 @@ module DCPU16
 
     def memory_dump
       dump = Array.new
-      @memory.raw.each do |m|
+      @memory.raw.compact.each do |m|
         dump << m.unpack("H*")
       end
 
