@@ -13,4 +13,4 @@ Caveats
 =======
 Each instruction leads to a new Instruction object (either BasicInstruction or NonBasicInstruction). A better implementation would use the Flyweight pattern (http://en.wikipedia.org/wiki/Flyweight_pattern)
 to limit the number of instances. However, both BasicInstruction and NonBasicInstruction have intern states. One solution would be to pass this state as a parameter to BasicInstruction#execute, but
-that implies heavy modifications to the code.
+that implies heavy modifications of the code.
