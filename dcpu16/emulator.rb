@@ -30,7 +30,7 @@ module DCPU16
     end
 
     def run
-      1.upto(47) { execute }
+      1.upto(100) { execute }
     end
 
     def memory_dump

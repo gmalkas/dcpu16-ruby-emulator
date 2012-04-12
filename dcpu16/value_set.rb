@@ -42,9 +42,9 @@ module DCPU16
       when 0x00..0x07
         emulator.registers[code] = value
       when 0x08..0x0F
-        emulator.memory.insert(Memory.to_i(emulator.registers[code - 0x08]), value)
+        emulator.memory.set(Memory.to_i(emulator.registers[code - 0x08]), value)
       when 0x10..0x17
-        emulator.memory.insert(next_word + Memory.to_i(emulator.registers[code - 0x10]), value)
+        emulator.memory.set(next_word + Memory.to_i(emulator.registers[code - 0x10]), value)
       when 0x1A
         emulator.stack.push value
       when 0x1b
@@ -54,7 +54,7 @@ module DCPU16
       when 0x1d
         p "You tried to assign 0!"
       when 0x1E
-        emulator.memory.insert(next_word, value)
+        emulator.memory.set(next_word, value)
       when 0x1F
         p "You tried to assign a literal value!"
       when 0x20..0x3f
