@@ -9,8 +9,8 @@ module DCPU16
   #   bbbbbbaaaaaaoooo
   #
   # oooo: the opcode
-  # aaaaaa: the first value
-  # bbbbbb: the second value
+  # aaaaaa: the first value associated with the instruction
+  # bbbbbb: the second value associated with the instruction
   #
   # For basic instructions, the opcode is between 0x1 and 0xF. See DCPU-16 specification for more details.
   #
