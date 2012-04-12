@@ -7,7 +7,7 @@ module DCPU16
   class Memory
 
     #
-    # According to the specification, the RAM is 0x10000 words.
+    # According to the specification, the RAM's size is 0x10000 words.
     # We load the program's instructions at address 0x0000.
     #
     # == Parameters

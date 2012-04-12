@@ -26,12 +26,24 @@ module DCPU16
       @emulator.memory.set(@sp, value)
     end
 
+    #
+    # Removes the head of the stack and returns it.
+    #
+    # == Returns
+    # A binary string
+    #
     def pop
       value = peek
       @sp += 1
       value
     end
 
+    #
+    # Returns the head of the stack but does not remove it.
+    #
+    # == Returns
+    # A binary string
+    #
     def peek
       @emulator.memory.fetch(@sp)
     end
