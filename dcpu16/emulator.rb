@@ -1,7 +1,6 @@
 require_relative './instruction_set'
 require_relative './memory'
 require_relative './stack'
-require 'ostruct'
 
 module DCPU16
 
@@ -52,12 +51,18 @@ module DCPU16
       dump.join " | "
     end
 
+    #
+    # Skip the next instruction (including any 'next word' associated with the association).
+    #
     def skip_instruction
       parse_instruction next_word
     end
 
     protected
 
+    #
+    # Reads the binary file, loads the instructions into the RAM, then initializes counters.
+    #
     def load_program_from_file(path)
       data = Array.new
 
@@ -87,18 +92,43 @@ module DCPU16
       @register_names = %w(A B C X Y Z I J)
     end
 
+    #
+    # Executes the next instruction.
+    #
     def execute
       @overflow = 0
       instruction = parse_instruction next_word
       instruction.execute self
     end
 
+    #
+    # Reads the next word.
+    #
+    # == Returns
+    # A binary string.
+    #
     def next_word
       word = @memory.fetch(@pc)
       @pc += 1
       word
     end
 
+    #
+    # Parses the instruction, fetches the corresponding instruction instance, then sets its attributes
+    # (including next words, if any of the instruction value codes refers to "next word")
+    #
+    # == Parameters
+    # word::
+    #   A binary string representing the instruction.
+    #
+    # == Returns
+    # An instance of either a BasicInstruction's subclass or a NonBasicInstruction's subclass.
+    #
+    # == See also
+    #
+    # DCPU16::BasicInstruction
+    # DCPU16::NonBasicInstruction
+    #
     def parse_instruction(word)
       value = Memory.to_i word
       opcode = value & 0xF
