@@ -34,8 +34,8 @@ module DCPU16
 
     def memory_dump
       dump = Array.new
-      @memory.raw.compact.each do |m|
-        dump << m.unpack("H*")
+      @memory.raw.each_index do |i|
+        dump << i.to_s(16) + ": " +  @memory.fetch(i).unpack("H*").first unless @memory.fetch(i).nil?
       end
 
       dump.join " "
