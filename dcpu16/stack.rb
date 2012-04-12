@@ -1,4 +1,10 @@
 module DCPU16
+  #
+  # == Stack
+  #
+  # Implements the stack.
+  # According to the specification, the stack starts in reverse order at address 0xFFFF in the RAM.
+  #
   class Stack
     attr_reader :sp
 
@@ -7,6 +13,14 @@ module DCPU16
       reset
     end
 
+    #
+    # Pushes a value onto the stack.
+    # According to the specification, it decrements SP then pushes the value.
+    #
+    # == Parameters
+    # value::
+    #   The binary string to push.    
+    #
     def push(value)
       @sp -= 1
       @emulator.memory.set(@sp, value)
