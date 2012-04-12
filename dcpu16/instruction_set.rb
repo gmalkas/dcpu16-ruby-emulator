@@ -16,6 +16,11 @@ require_relative './instructions/ifb'
 require_relative './instructions/jsr'
 
 module DCPU16
+  #
+  # == InstructionSet
+  #
+  # Encapsulates the mapping between opcodes and instructions.
+  #
   class InstructionSet
     @@basic_instructions = {
       0x1 => Instructions::Set,
@@ -39,10 +44,30 @@ module DCPU16
       0x1 => Instructions::Jsr
     }
 
+    #
+    # Returns a new instance of the basic instruction associated with the opcode.
+    #
+    # == Parameters
+    # opcode::
+    #   An integer
+    #
+    # == Returns
+    #   An instance of a BasicInstruction's subclass, according to the mapping.
+    #
     def self.fetch_basic_instruction(opcode)
       @@basic_instructions.fetch(opcode).new
     end
     
+    #
+    # Returns a new instance of the non-basic instruction associated with the opcode.
+    #
+    # == Parameters
+    # opcode::
+    #   An integer
+    #
+    # == Returns
+    #   An instance of a NonBasicInstruction's subclass, according to the mapping.
+    #
     def self.fetch_non_basic_instruction(opcode)
       @@non_basic_instructions.fetch(opcode).new
     end
