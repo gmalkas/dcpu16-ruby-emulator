@@ -52,7 +52,7 @@ module DCPU16
     end
 
     #
-    # Skip the next instruction (including any 'next word' associated with the association).
+    # Skip the next instruction (including any 'next word' associated with the instruction).
     #
     def skip_instruction
       parse_instruction next_word
