@@ -4,12 +4,12 @@ module DCPU16
 
     def initialize(emulator)
       @emulator = emulator
-      @sp = 0xFFFF
+      reset
     end
 
     def push(value)
-      emulator.memory.insert(@sp, value)
       @sp -= 1
+      emulator.memory.insert(@sp, value)
     end
 
     def pop
@@ -23,7 +23,7 @@ module DCPU16
     end
 
     def reset
-      @sp = 0xFFFF
+      @sp = 0x10000
     end
   end
 end
