@@ -14,7 +14,7 @@ module DCPU16
   #
   #  emulator = DCPU16::Emulator.new "myfile.bin"
   #  emulator.run
-  #  p emulator.dump
+  #  p emulator.memory_dump
   #
   class Emulator
     attr_reader :memory, :stack, :registers
@@ -30,7 +30,7 @@ module DCPU16
     end
 
     def run
-      1.upto(3) { execute }
+      1.upto(47) { execute }
     end
 
     def memory_dump
@@ -45,8 +45,10 @@ module DCPU16
     def registers_dump
       dump = Array.new
       @registers.each do |k, v|
-        dump << k.to_s(16) + ": " + v.unpack("H*").first
+        dump << @register_names[k] + ": " + v.unpack("H*").first
       end
+      dump << "PC: " + @pc.to_s(16)
+      dump << "Overflow: " + @overflow.to_s
       dump.join " | "
     end
 
@@ -81,6 +83,8 @@ module DCPU16
         0x06 => Memory.to_bin(0),
         0x07 => Memory.to_bin(0)
       }
+
+      @register_names = %w(A B C X Y Z I J)
     end
 
     def execute
@@ -98,12 +102,12 @@ module DCPU16
     def parse_instruction(word)
       value = Memory.to_i word
       opcode = value & 0xF
-
       if opcode == 0
         # Non-basic instruction
         opcode = (value >> 4) & 0x3F
         instruction = InstructionSet.fetch_non_basic_instruction opcode
         instruction.a = (value >> 10) & 0x3F
+        instruction.next_word_a = Memory.to_i(next_word) if instruction.next_word_for_a?
       else
         # Basic instruction
         instruction = InstructionSet.fetch_basic_instruction opcode
