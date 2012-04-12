@@ -13,6 +13,7 @@ require_relative './instructions/ife'
 require_relative './instructions/ifn'
 require_relative './instructions/ifg'
 require_relative './instructions/ifb'
+require_relative './instructions/jsr'
 
 module DCPU16
   class InstructionSet
@@ -35,7 +36,7 @@ module DCPU16
     }
 
     @@non_basic_instructions = {
-
+      0x1 => Instructions::Jsr
     }
 
     def self.fetch_basic_instruction(opcode)
