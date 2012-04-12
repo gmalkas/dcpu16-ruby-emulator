@@ -1,4 +1,6 @@
 require_relative './instruction_set'
+require_relative './memory'
+require_relative './stack'
 require 'ostruct'
 
 module DCPU16
@@ -15,20 +17,24 @@ module DCPU16
   #  p emulator.dump
   #
   class Emulator
-    attr_reader :memory, :pc, :sp, :overflow, :registers
+    attr_reader :memory, :pc, :stack, :overflow, :registers
 
     def initialize(path)
       initialize_registers
       load_program_from_file path
     end
 
+    def sp
+      @stack.sp
+    end
+
     def run
       execute
     end
 
-    def dump
+    def memory_dump
       dump = Array.new
-      @memory.each do |m|
+      @memory.raw.each do |m|
         dump << m.unpack("H*")
       end
 
@@ -38,7 +44,7 @@ module DCPU16
     def registers_dump
       dump = Array.new
       @registers.each do |k, v|
-        dump << k.to_s(16) + ": " + v.to_s(16)
+        dump << k.to_s(16) + ": " + v.unpack("H*").first
       end
       dump.join " | "
     end
@@ -46,28 +52,29 @@ module DCPU16
     protected
 
     def load_program_from_file(path)
-      @memory = Array.new
+      data = Array.new
 
       File.open(path, "rb") do |f|
         until f.eof?
-          @memory << f.read(2)
+          data << f.read(2)
         end
       end
 
+      @memory = Memory.new data
       @pc = 0
-      @sp = 0xFFFF
+      @stack = Stack.new self
     end
 
     def initialize_registers
       @registers = {
-        0x00 => 0,
-        0x01 => 0,
-        0x02 => 0,
-        0x03 => 0,
-        0x04 => 0,
-        0x05 => 0,
-        0x06 => 0,
-        0x07 => 0
+        0x00 => Memory.to_bin(0),
+        0x01 => Memory.to_bin(0),
+        0x02 => Memory.to_bin(0),
+        0x03 => Memory.to_bin(0),
+        0x04 => Memory.to_bin(0),
+        0x05 => Memory.to_bin(0),
+        0x06 => Memory.to_bin(0),
+        0x07 => Memory.to_bin(0)
       }
     end
 
@@ -77,26 +84,27 @@ module DCPU16
     end
 
     def next_word
-      word = @memory[@pc].unpack("B*").first.to_i(2)
+      word = @memory.fetch(@pc)
       @pc += 1
       word
     end
 
     def parse_instruction(word)
-      opcode = word & 0xF
+      value = Memory.to_i word
+      opcode = value & 0xF
 
       if opcode == 0
         # Non-basic instruction
-        opcode = (word >> 4) & 0x3F
+        opcode = (value >> 4) & 0x3F
         instruction = InstructionSet.fetch_non_basic_instruction opcode
-        instruction.a = (word >> 10) & 0x3F
+        instruction.a = (value >> 10) & 0x3F
       else
         # Basic instruction
         instruction = InstructionSet.fetch_basic_instruction opcode
-        instruction.a = (word >> 4) & 0x3F
-        instruction.b = (word >> 10) & 0x3F
-        instruction.next_word_a = next_word if instruction.next_word_for_a?
-        instruction.next_word_b = next_word if instruction.next_word_for_b?
+        instruction.a = (value >> 4) & 0x3F
+        instruction.b = (value >> 10) & 0x3F
+        instruction.next_word_a = Memory.to_i(next_word) if instruction.next_word_for_a?
+        instruction.next_word_b = Memory.to_i(next_word) if instruction.next_word_for_b?
       end
       instruction
     end

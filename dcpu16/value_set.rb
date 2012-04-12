@@ -2,15 +2,16 @@ module DCPU16
   class ValueSet
     #
     # Returns the corresponding value.
+    # `code` and `next_word` must be integers
     #
     def self.get(emulator, code, next_word)
         case code     
         when 0x00..0x07
           emulator.registers[codeb]
         when 0x08..0x0F
-          emulator.memory[emulator.registers[code - 0x08]]
+          emulator.memory.fetch(emulator.registers[code - 0x08])
         when 0x10..0x17
-          emulator.memory[next_word + emulator.registers[code - 0x10]]
+          emulator.memory.fetch(next_word + emulator.registers[code - 0x10])
         when 0x18
           emulator.stack.pop
         when 0x19
@@ -22,7 +23,7 @@ module DCPU16
         when 0x1d
           0
         when 0x1E
-          emulator.memory[next_word]
+          emulator.memory.fetch(next_word)
         when 0x1F
           next_word
         when 0x20..0x3f
@@ -35,7 +36,7 @@ module DCPU16
     def self.set(emulator, code, next_word, value)
         case code
         when 0x00..0x07
-          emulator.registers[code] = value
+          emulator.registers[code] = Memory.to_bin(value)
         when 0x08..0x0F
           emulator.memory[emulator.registers[code - 0x08]] = value
         when 0x10..0x17
