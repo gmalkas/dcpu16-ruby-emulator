@@ -43,8 +43,8 @@ module DCPU16
         Memory.to_bin emulator.sp
       when 0x1c # PC
         Memory.to_bin emulator.pc
-      when 0x1d # 0
-        0
+      when 0x1d # 0verflow
+        Memory.to_bin emulator.overflow
       when 0x1E # [Next word]
         emulator.memory.fetch(next_word)
       when 0x1F # Next word (literal)
@@ -84,8 +84,8 @@ module DCPU16
         emulator.sp = Memory.to_i value
       when 0x1c # PC
         emulator.pc = Memory.to_i value
-      when 0x1d # 0
-        p "You tried to assign 0!"
+      when 0x1d # 0verflow
+        emulator.overflow = Memory.to_i value
       when 0x1E # [Next word]
         emulator.memory.set(next_word, value)
       when 0x1F # Next word (literal)
