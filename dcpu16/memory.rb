@@ -9,16 +9,9 @@ module DCPU16
       @ram[index]
     end
 
-    def fetch_integer(index)
-      fetch(index).unpack("B*").first.to_i 2
-    end
-
     def insert(index, value)
+      value = Memory.to_bin(value) if value.is_a? Integer
       @ram[index] = value
-    end
-
-    def insert_integer(index, value)
-      insert(index, [value].pack("S"))
     end
     
     def raw
