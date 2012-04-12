@@ -9,7 +9,7 @@ module DCPU16
 
     def push(value)
       @sp -= 1
-      emulator.memory.insert(@sp, value)
+      @emulator.memory.insert(@sp, value)
     end
 
     def pop
@@ -19,7 +19,7 @@ module DCPU16
     end
 
     def peek
-      emulator.memory.fetch(@sp)
+      @emulator.memory.fetch(@sp)
     end
 
     def reset
