@@ -9,17 +9,17 @@ module DCPU16
       when 0x00..0x07
         emulator.registers[code]
       when 0x08..0x0F
-        emulator.memory.fetch(emulator.registers[code - 0x08])
+        emulator.memory.fetch(Memory.to_i(emulator.registers[code - 0x08]))
       when 0x10..0x17
-        emulator.memory.fetch(next_word + emulator.registers[code - 0x10])
+        emulator.memory.fetch(next_word + Memory.to_i(emulator.registers[code - 0x10]))
       when 0x18
         emulator.stack.pop
       when 0x19
         emulator.stack.peek
       when 0x1b
-        emulator.sp
+        Memory.to_bin emulator.sp
       when 0x1c
-        emulator.pc
+        Memory.to_bin emulator.pc
       when 0x1d
         0
       when 0x1E
@@ -42,15 +42,15 @@ module DCPU16
       when 0x00..0x07
         emulator.registers[code] = value
       when 0x08..0x0F
-        emulator.memory.insert(emulator.registers[code - 0x08], value)
+        emulator.memory.insert(Memory.to_i(emulator.registers[code - 0x08]), value)
       when 0x10..0x17
-        emulator.memory.insert(next_word + emulator.registers[code - 0x10], value)
+        emulator.memory.insert(next_word + Memory.to_i(emulator.registers[code - 0x10]), value)
       when 0x1A
         emulator.stack.push value
       when 0x1b
-        emulator.sp = value
+        emulator.sp = Memory.to_i value
       when 0x1c
-        emulator.pc = value
+        emulator.pc = Memory.to_i value
       when 0x1d
         p "You tried to assign 0!"
       when 0x1E
