@@ -28,8 +28,17 @@ module DCPU16
       @stack.sp
     end
 
-    def run
-      1.upto(100) { execute }
+    #
+    # = DCPU16::Emulator#run
+    # 
+    # Executes a given number of instructions from the binary file.
+    #
+    # == Parameters
+    # number_of_instructions::
+    #   The number of instructions to execute, 1 by default.
+    #
+    def run(number_of_instructions=1)
+      number_of_instructions.times { execute }
     end
 
     def memory_dump
